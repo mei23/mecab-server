@@ -1,6 +1,8 @@
 import * as http from 'http';
 import * as Koa from 'koa';
 import * as cors from '@koa/cors';
+import * as bodyParser from 'koa-bodyparser';
+import { mecab } from './mecab';
 
 const app = new Koa();
 
@@ -8,9 +10,20 @@ app.use(cors({
 	origin: '*'
 }));
 
+app.use(bodyParser({
+}));
+
 app.use(async ctx => {
 	try {
-		ctx.body = {};
+		const text = ctx.query.text || ctx.request.body?.text;
+		if (text == null) throw 'no input';
+
+		const result = await mecab(text);
+
+		ctx.body = {
+			result
+		};
+
 		ctx.set('Cache-Control', 'public, max-age=604800');
 	} catch (e) {
 		console.log(`error: ${e} ${ctx.query.url}`);
