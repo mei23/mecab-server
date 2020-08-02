@@ -16,7 +16,12 @@ app.use(bodyParser({
 app.use(async ctx => {
 	try {
 		const text = ctx.query.text || ctx.request.body?.text;
-		if (text == null) throw 'no input';
+
+		if (text == null) {
+			ctx.status = 400;
+			ctx.set('Cache-Control', 'public, max-age=3600');
+			return;
+		}
 
 		const result = await mecab(text);
 
@@ -24,11 +29,11 @@ app.use(async ctx => {
 			result
 		};
 
-		ctx.set('Cache-Control', 'public, max-age=604800');
+		ctx.set('Cache-Control', 'private, max-age=3600');
 	} catch (e) {
 		console.log(`error: ${e} ${ctx.query.url}`);
 		ctx.status = 500;
-		ctx.set('Cache-Control', 'public, max-age=3600');
+		ctx.set('Cache-Control', 'private, max-age=3600');
 	}
 });
 
