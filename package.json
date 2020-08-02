@@ -10,7 +10,7 @@
   "types": "./built/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint src/index.ts",
+    "lint": "eslint src/**/*.ts",
     "start": "node ./built/index.js"
   },
   "homepage": "https://github.com/mei23/mecab-server#readme",
