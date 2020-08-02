@@ -1,0 +1,9 @@
+version: "3"
+services:
+  server:
+    build: .
+    restart: always
+    ports:
+      - "3062:3062"
+    volumes:
+      - "./config.yml:/usr/src/app/config.yml"
