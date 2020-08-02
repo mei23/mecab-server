@@ -1,2 +1,7 @@
+# デフォルト値はUbuntuの例
+
+# mecabのパス
 mecabBin: 'mecab'
+
+# mecabの辞書のパス (省略可能)
 mecabDic: '/usr/lib/x86_64-linux-gnu/mecab/dic/mecab-ipadic-neologd'
